@@ -1,0 +1,11 @@
+*.sublime*
+*.pyc
+
+alembic.ini
+gunicorn.conf.py
+celerybeat-schedule
+/settings_local.py
+
+/env/
+/logs/
+/migrations/sql/*
