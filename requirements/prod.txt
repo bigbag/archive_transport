@@ -1,0 +1,14 @@
+# AIOHTTP
+aiohttp
+jinja2
+aiohttp_jinja2
+
+# Database
+pymysql
+aiomysql
+alembic
+SQLAlchemy
+
+# Libs
+geopy
+celery
