@@ -12,3 +12,5 @@ SQLAlchemy
 # Libs
 geopy
 celery
+wtforms
+wtforms_json
