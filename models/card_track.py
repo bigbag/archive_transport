@@ -1,6 +1,7 @@
 import sqlalchemy as sa
-from transport.models.bus_track import BusTrack
-from transport.models.map_point import MapPoint
+
+from models.bus_track import BusTrack
+from models.map_point import MapPoint
 
 
 class CardTrack(object):
@@ -21,10 +22,10 @@ class CardTrack(object):
     MESSAGE_TO_SCHOOL = u'Ваш ребенок доставлен на автобусе в школу'
 
     table = sa.Table(
-        'bus_track',
+        'card_track',
         metadata,
         sa.Column('id', sa.Integer, primary_key=True),
-        sa.Column('blockid', sa.String(128), nullable=False),
+        sa.Column('cardid', sa.String(128), nullable=False),
         sa.Column('carddata', sa.String(128), nullable=False),
         sa.Column('blockid', sa.String(128), nullable=False),
         sa.Column('time', sa.Integer, nullable=False),
