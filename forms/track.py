@@ -28,7 +28,7 @@ class BusTrackForm(Form):
         pass
 
 
-class MapPointForm(Form):
+class PointForm(Form):
     address = TextField(validators=[InputRequired(), Length(max=256)])
     type = IntegerField(validators=[InputRequired()])
     code128 = TextField(validators=[InputRequired(), Length(max=128)])
