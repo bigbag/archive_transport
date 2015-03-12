@@ -19,6 +19,7 @@ import sqlalchemy as sa
 def upgrade():
     op.add_column('map_point', sa.Column(
         'address', sa.String(length=256), nullable=True))
-        
+
+
 def downgrade():
     op.drop_column('map_point', 'address')

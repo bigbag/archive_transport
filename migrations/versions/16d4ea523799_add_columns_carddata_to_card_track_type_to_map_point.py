@@ -23,7 +23,8 @@ def upgrade():
         'start_point', sa.Integer(), nullable=True))
     op.add_column('map_point', sa.Column(
         'type', sa.Integer(), nullable=False, server_default='1'))
-        
+
+
 def downgrade():
     op.drop_column('card_track', 'carddata')
     op.drop_column('card_track', 'start_point')
