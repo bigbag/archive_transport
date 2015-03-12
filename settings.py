@@ -63,3 +63,13 @@ class Config(object):
     }
 
     setup_loggers(LOG_SETTINGS, LOG_ENABLE, LOG_LEVEL, LOG_DIR, LOG_MAX_SIZE)
+
+    # SMS
+    SMS_URL = ''
+
+    SMS_API_ID = ''
+    SMS_LOGIN = ''
+    SMS_PASSWORD = ''
+
+    SMS_PARTNER_ID = ''
+    SMS_SENDER_NAME = False
