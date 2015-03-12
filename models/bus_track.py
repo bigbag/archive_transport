@@ -3,6 +3,8 @@ import sqlalchemy as sa
 
 class BusTrack(object):
 
+    __name__ = 'bus track'
+
     metadata = sa.MetaData()
 
     TYPE_START = 'start'

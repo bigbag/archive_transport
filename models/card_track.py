@@ -1,10 +1,12 @@
 import sqlalchemy as sa
 
 from models.bus_track import BusTrack
-from models.map_point import MapPoint
+from models.point import Point
 
 
 class CardTrack(object):
+
+    __name__ = 'card track'
 
     metadata = sa.MetaData()
 
@@ -39,14 +41,14 @@ class CardTrack(object):
         answer = False
 
         if self.STATUS_NEW == self.status and BusTrack.TYPE_START == event_type:
-            if MapPoint.TYPE_SCHOOL == point_type:
+            if Point.TYPE_SCHOOL == point_type:
                 answer = self.MESSAGE_FROM_SCHOOL
-            elif MapPoint.TYPE_HOME == point_type:
+            elif Point.TYPE_HOME == point_type:
                 answer = self.MESSAGE_FROM_HOME
         elif self.STATUS_DRIVE == self.status and BusTrack.TYPE_STOP == event_type:
-            if MapPoint.TYPE_SCHOOL == point_type:
+            if Point.TYPE_SCHOOL == point_type:
                 answer = self.MESSAGE_TO_SCHOOL
-            elif MapPoint.TYPE_HOME == point_type:
+            elif Point.TYPE_HOME == point_type:
                 answer = self.MESSAGE_TO_HOME
 
         return answer

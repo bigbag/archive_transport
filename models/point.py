@@ -3,7 +3,9 @@ import math
 import sqlalchemy as sa
 
 
-class MapPoint(object):
+class Point(object):
+
+    __name__ = 'point'
 
     metadata = sa.MetaData()
 
@@ -14,7 +16,7 @@ class MapPoint(object):
     EQUATOR = float(40075000)  # длинна экватора, м
 
     table = sa.Table(
-        'map_point',
+        'point',
         metadata,
         sa.Column('id', sa.Integer, primary_key=True),
         sa.Column('lat', sa.Float, nullable=False),
@@ -28,13 +30,13 @@ class MapPoint(object):
     @staticmethod
     def get_nearby(lat, lon):
         """Получает точки в квадрате со сторонами 2*DISTANCE с центром в переданных координатах"""
-        lat_delta = MapPoint.DISTANCE * 360 / MapPoint.EQUATOR
-        lon_delta = MapPoint.DISTANCE * 360 / \
-            (MapPoint.EQUATOR * math.cos(math.radians(lat)))
+        lat_delta = Point.DISTANCE * 360 / Point.EQUATOR
+        lon_delta = Point.DISTANCE * 360 / \
+            (Point.EQUATOR * math.cos(math.radians(lat)))
 
-        query = MapPoint.query.filter(
-            MapPoint.lat.between(lat - lat_delta, lat + lat_delta))
+        query = Point.query.filter(
+            Point.lat.between(lat - lat_delta, lat + lat_delta))
         query = query.filter(
-            MapPoint.lon.between(lon - lon_delta, lon + lon_delta))
+            Point.lon.between(lon - lon_delta, lon + lon_delta))
 
         return query.all()
