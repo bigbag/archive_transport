@@ -1,5 +1,5 @@
 import wtforms_json
-from wtforms import Form, IntegerField, TextField, FloatField
+from wtforms import FloatField, Form, IntegerField, TextField
 from wtforms.validators import *
 
 wtforms_json.init()

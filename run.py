@@ -1,9 +1,8 @@
 import logging
 
 import asyncio
-
-from aiomysql.sa import create_engine
 from aiohttp import web
+from aiomysql.sa import create_engine
 from views import track
 
 try:
