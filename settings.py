@@ -67,7 +67,6 @@ class Config(object):
     # SMS
     SMS_URL = ''
 
-    SMS_API_ID = ''
     SMS_LOGIN = ''
     SMS_PASSWORD = ''
 
