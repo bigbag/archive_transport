@@ -1,3 +1,5 @@
+import asyncio
+import logging
 import math
 
 import sqlalchemy as sa
@@ -12,8 +14,8 @@ class Point(object):
     TYPE_SCHOOL = 1
     TYPE_HOME = 2
 
-    DISTANCE = float(100)  # расстояние, м
-    EQUATOR = float(40075000)  # длинна экватора, м
+    DISTANCE = float(100)  # meter
+    EQUATOR = float(40075000)  # length of the equator, meter
 
     table = sa.Table(
         'point',
@@ -27,16 +29,20 @@ class Point(object):
         sa.Column('address', sa.String(256)),
     )
 
-    @staticmethod
-    def get_nearby(lat, lon):
-        """Получает точки в квадрате со сторонами 2*DISTANCE с центром в переданных координатах"""
-        lat_delta = Point.DISTANCE * 360 / Point.EQUATOR
-        lon_delta = Point.DISTANCE * 360 / \
-            (Point.EQUATOR * math.cos(math.radians(lat)))
+    @asyncio.coroutine
+    def get_nearby(self, engine, lat, lon):
+        lat_delta = self.DISTANCE * 360 / self.EQUATOR
+        lon_delta = self.DISTANCE * 360 / \
+            (self.EQUATOR * math.cos(math.radians(lat)))
 
-        query = Point.query.filter(
-            Point.lat.between(lat - lat_delta, lat + lat_delta))
-        query = query.filter(
-            Point.lon.between(lon - lon_delta, lon + lon_delta))
-
-        return query.all()
+        point = self.table
+        stmt = point.select().\
+            where(point.c.lat.between(lat - lat_delta, lat + lat_delta)). \
+            where(point.c.lon.between(lon - lon_delta, lon + lon_delta))
+        with (yield from engine) as conn:
+            try:
+                result = yield from conn.execute(stmt)
+            except Exception as e:
+                logging.exception("Exception: %(body)s", {'body': e})
+            else:
+                return result
