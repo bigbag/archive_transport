@@ -1,5 +1,4 @@
 import sqlalchemy as sa
-
 from models.bus_track import BusTrack
 from models.point import Point
 
