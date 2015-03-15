@@ -1,14 +1,14 @@
-import logging
 import json
+import logging
+
 import asyncio
-
 from aiohttp import web
-
+from forms.track import BusTrackForm, CardTrackForm
 from helpers.http_helper import is_json
+from models import insert_data
 from models.bus_track import BusTrack
 from models.card_track import CardTrack
-from models.map_point import MapPoint
-from forms.track import CardTrackForm, BusTrackForm
+from models.point import Point
 
 
 class Track:
@@ -25,14 +25,7 @@ class Track:
             return web.HTTPBadRequest()
 
         data['status'] = CardTrack.STATUS_NEW
-        card_track = CardTrack.table
-        with (yield from request.app['db']) as conn:
-            trans = yield from conn.begin()
-            yield from conn.execute(card_track.insert().values(data))
-            yield from trans.commit()
-
-            logging.debug("Insert new card tack")
-            logging.debug(data)
+        yield from insert_data(request.app['db'], CardTrack, data)
 
         return web.Response(text=json.dumps({'status': 'ok'}),
                             content_type='application/json')
@@ -45,14 +38,7 @@ class Track:
         if not form.validate():
             return web.HTTPBadRequest()
 
-        bus_track = BusTrack.table
-        with (yield from request.app['db']) as conn:
-            trans = yield from conn.begin()
-            yield from conn.execute(bus_track.insert().values(data))
-            yield from trans.commit()
-
-            logging.debug("Insert new bus tack")
-            logging.debug(data)
+        yield from insert_data(request.app['db'], BusTrack, data)
 
         return web.Response(text=json.dumps({'status': 'ok'}),
                             content_type='application/json')
