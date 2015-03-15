@@ -73,3 +73,5 @@ class Config(object):
 
     SMS_PARTNER_ID = ''
     SMS_SENDER_NAME = False
+
+    REQUEST_TIMEOUT = 10  # 10 sec
